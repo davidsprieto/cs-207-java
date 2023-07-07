@@ -27,19 +27,17 @@ public class LinkedList<T> {
     }
 
     public void add(T afterThis, T info) {
-        LLNode<T> temp;
-        LLNode<T> curr = list;
+        if (!contains(afterThis)) {
+            addLast(info);
+            return;
+        }
         LLNode<T> newNode = new LLNode<T>(info);
-        while (curr != null) {
-            if (curr.getInfo().equals(afterThis)) {
-                temp = curr.getLink();
-                curr.setLink(newNode);
-                curr = curr.getLink();
-                curr.setLink(temp);
-                return;
-            }
+        LLNode<T> curr = list;
+        while (!curr.getInfo().equals(afterThis)) {
             curr = curr.getLink();
         }
+        newNode.setLink(curr.getLink());
+        curr.setLink(newNode);
     }
 
     public void removeFirst() {
